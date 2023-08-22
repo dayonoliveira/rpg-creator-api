@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
     user_id SERIAL PRIMARY KEY,
-    nickname VARCHAR NOT NULL,
-    email VARCHAR NOT NULL,
+    nickname VARCHAR NOT NULL UNIQUE,
+    email VARCHAR NOT NULL UNIQUE,
     password VARCHAR NOT NULL,
     bio VARCHAR,
     birth_date DATE,
@@ -10,13 +10,13 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE TABLE IF NOT EXISTS rpgs (
     rpg_id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL,
+    name VARCHAR NOT NULL UNIQUE,
     based_at VARCHAR NOT NULL,
     description VARCHAR NOT NULL,
     decision_method VARCHAR NOT NULL,
     min_players INT NOT NULL,
     max_players INT,
-    created_by BIGINT NOT NULL,
+    created_by BIGINT,
     is_public BOOLEAN NOT NULL,
     FOREIGN KEY (created_by) REFERENCES users (user_id)
 );
