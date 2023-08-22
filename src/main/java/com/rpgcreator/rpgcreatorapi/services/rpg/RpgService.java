@@ -32,7 +32,7 @@ public class RpgService {
     @Transactional
     public Rpg createRpg(CreateRpgInputDTO rpgData) {
 
-        if (rpgData.getMaxPlayers() == 0) rpgData.setMaxPlayers(99);
+        if (rpgData.getMaxPlayers() == null || rpgData.getMaxPlayers() == 0) rpgData.setMaxPlayers(99);
 
         return rpgRepository.save(new Rpg(rpgData));
     }
