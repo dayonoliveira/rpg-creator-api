@@ -1,12 +1,13 @@
-package com.rpgcreator.rpgcreatorapi.dtos.output;
+package com.rpgcreator.rpgcreatorapi.dtos.output.rpg;
 
+import com.rpgcreator.rpgcreatorapi.dtos.output.rpg.types.CreatedBy;
 import com.rpgcreator.rpgcreatorapi.entities.rpg.Rpg;
 import com.rpgcreator.rpgcreatorapi.enums.rpg.ActionsDecisionMethodEnum;
 import com.rpgcreator.rpgcreatorapi.enums.rpg.RpgTypeEnum;
 import lombok.Getter;
 
 @Getter
-public final class RpgOutputDTO {
+public final class RpgsOutputDTO {
     private final Long rpgId;
     private final String name;
     private final RpgTypeEnum basedAt;
@@ -14,10 +15,12 @@ public final class RpgOutputDTO {
     private final ActionsDecisionMethodEnum decisionMethod;
     private final Integer minPlayers;
     private final Integer maxPlayers;
-    private final Long createdBy;
+    private final CreatedBy createdBy;
     private final Boolean isPublic;
 
-    public RpgOutputDTO(Rpg rpg) {
+    public RpgsOutputDTO(Rpg rpg) {
+        CreatedBy userCreator = new CreatedBy(rpg.getCreatedBy().getUserId(), rpg.getCreatedBy().getNickname());
+
         this.rpgId = rpg.getRpgId();
         this.name = rpg.getName();
         this.basedAt = rpg.getBasedAt();
@@ -25,7 +28,7 @@ public final class RpgOutputDTO {
         this.decisionMethod = rpg.getDecisionMethod();
         this.minPlayers = rpg.getMinPlayers();
         this.maxPlayers = rpg.getMaxPlayers();
-        this.createdBy = rpg.getCreatedBy();
+        this.createdBy = userCreator;
         this.isPublic = rpg.getIsPublic();
     }
 }

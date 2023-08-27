@@ -1,7 +1,7 @@
 package com.rpgcreator.rpgcreatorapi.resources.rpg;
 
 import com.rpgcreator.rpgcreatorapi.dtos.input.rpg.CreateRpgInputDTO;
-import com.rpgcreator.rpgcreatorapi.dtos.output.RpgOutputDTO;
+import com.rpgcreator.rpgcreatorapi.dtos.output.rpg.RpgsOutputDTO;
 
 import com.rpgcreator.rpgcreatorapi.entities.rpg.Rpg;
 import com.rpgcreator.rpgcreatorapi.services.rpg.RpgService;
@@ -25,21 +25,20 @@ public class RpgResource {
     private RpgService rpgService;
 
     @GetMapping
-    public ResponseEntity<List<RpgOutputDTO>> getRpgs(
-            @RequestParam(required = false) Long rpgId
-    ) {
-        List<RpgOutputDTO> rpgs;
-        if (rpgId == null) {
-            rpgs = this.rpgService.getAllRpgs();
-        } else {
-            rpgs = this.rpgService.getRpgById(rpgId);
-        }
+    public ResponseEntity<List<RpgsOutputDTO>> getRpgs() {
+        return ResponseEntity.ok(this.rpgService.getAllRpgs());
+    }
 
-        return ResponseEntity.ok(rpgs);
+    @GetMapping("/detail")
+    public ResponseEntity<RpgsOutputDTO> getRpgDetails(
+        @RequestParam(name = "rpgId")
+        Long rpgId
+    ) {
+        return ResponseEntity.ok(this.rpgService.getRpgById(rpgId));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<RpgOutputDTO> createRpg(
+    public ResponseEntity<RpgsOutputDTO> createRpg(
             @RequestBody
             @Valid
             CreateRpgInputDTO rpgData,
@@ -53,11 +52,11 @@ public class RpgResource {
                 .buildAndExpand(rpgCreated.getRpgId())
                 .toUri();
 
-        return ResponseEntity.created(uri).body(new RpgOutputDTO(rpgCreated));
+        return ResponseEntity.created(uri).body(new RpgsOutputDTO(rpgCreated));
     }
 
     @PatchMapping("/update")
-    public ResponseEntity<RpgOutputDTO> updateRpg(
+    public ResponseEntity<RpgsOutputDTO> updateRpg(
             @RequestBody
             @Valid
             Map<String, Object> rpgData,
@@ -65,7 +64,7 @@ public class RpgResource {
     ) {
         Rpg rpgUpdated = this.rpgService.updateRpg(rpgId, rpgData);
 
-        return ResponseEntity.ok(new RpgOutputDTO(rpgUpdated));
+        return ResponseEntity.ok(new RpgsOutputDTO(rpgUpdated));
     }
 
     @DeleteMapping("/delete")
