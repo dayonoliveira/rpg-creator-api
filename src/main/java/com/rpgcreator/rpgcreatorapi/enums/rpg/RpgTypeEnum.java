@@ -8,8 +8,7 @@ import lombok.Getter;
 public enum RpgTypeEnum {
     DD_CLASSIC("D&D Clássico"),
     VAMPIRE_MASK("Vampiro: A Máscara"),
-    WEREWOLF_APOCALYPSE("Lobisomem: O Apocalipse"),
-    CUSTOM("RPG customizado");
+    WEREWOLF_APOCALYPSE("Lobisomem: O Apocalipse");
 
     private final String description;
 
