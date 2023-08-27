@@ -1,5 +1,6 @@
 package com.rpgcreator.rpgcreatorapi.dtos.input.rpg;
 
+import com.rpgcreator.rpgcreatorapi.entities.user.User;
 import com.rpgcreator.rpgcreatorapi.enums.rpg.ActionsDecisionMethodEnum;
 import com.rpgcreator.rpgcreatorapi.enums.rpg.RpgTypeEnum;
 import jakarta.validation.constraints.NotBlank;
@@ -21,6 +22,7 @@ public final class CreateRpgInputDTO {
     @NotNull
     private Integer minPlayers;
     private Integer maxPlayers;
+    @NotNull
     private Long createdBy;
     @NotNull
     private Boolean isPublic;
