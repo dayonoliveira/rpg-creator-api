@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface RpgRepository extends JpaRepository<Rpg, Long> {
     List<Rpg> findAllByCreatedBy(User user);
+
+    void deleteAllByCreatedBy(User user);
 }

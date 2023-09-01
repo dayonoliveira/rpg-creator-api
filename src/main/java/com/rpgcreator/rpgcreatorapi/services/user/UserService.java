@@ -13,6 +13,7 @@ import com.rpgcreator.rpgcreatorapi.repositories.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +43,7 @@ public class UserService {
 
     @Transactional
     public User createUser(CreateUserInputDTO userData) {
+        userData.setPassword(BCrypt.hashpw(userData.getPassword(), BCrypt.gensalt()));
 
         return userRepository.save(new User(userData));
     }
@@ -53,6 +55,10 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId).get();
+
+        rpgRepository.deleteAllByCreatedBy(user);
+
         userRepository.deleteById(userId);
     }
 
